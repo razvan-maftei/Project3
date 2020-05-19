@@ -1,0 +1,34 @@
+﻿@page
+@model MediaWebApp.Pages.File.FileIndexModel
+@{
+    ViewData["Title"] = "Media Files";
+}
+
+<h1>Media Files</h1>
+
+<p><a asp-page="./AddFile">Add Media</a></p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Files[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Files[0].Path)
+            </th>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Files)
+        {
+            <tr style="font-size: small">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Path)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

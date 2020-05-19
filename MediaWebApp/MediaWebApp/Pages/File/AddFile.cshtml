@@ -1,0 +1,15 @@
+﻿@page   
+@model MediaWebApp.Pages.File.AddFileModel
+@{
+    ViewData["Title"] = "Add Media File";
+}
+
+<h1>Add an Image or Video File</h1>
+
+<form method="post" class="form-group">
+    <label class="col-form-label-sm">
+        Choose a file:
+        <input asp-for="FileDTO.Path" class="form-control-file" type="file" accept=".png, .jpg, .jpeg, .mp4, .avi, .mov" />
+    </label>
+    <input type="submit" class="btn btn-primary" />
+</form>
