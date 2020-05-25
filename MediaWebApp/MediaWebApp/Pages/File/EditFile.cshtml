@@ -1,0 +1,20 @@
+﻿@page "{id:int}"
+@model MediaWebApp.Pages.File.EditFileModel
+@{
+    ViewData["Title"] = "EditFile";
+}
+
+<h1>Add Tag</h1>
+
+<form method="post" class="form-group">
+    <label class="col-form-label">
+        File Path:
+        <input readonly="true" asp-for="FileDTO.Path" class="form-control" type="text" placeholder="Please enter the full path of an image/video file" />
+    </label>
+    <h3>Tags</h3>
+    <div class="form-group">
+        <input asp-for="TagKey1" id="tagkeyin" class="form-control" type="text" placeholder="Enter new Tag Key" />
+        <input asp-for="TagValue1" id="tagvalin" class="form-control" type="text" placeholder="Enter new Tag Value" />
+    </div>
+    <input type="submit" class="btn btn-primary" />
+</form>

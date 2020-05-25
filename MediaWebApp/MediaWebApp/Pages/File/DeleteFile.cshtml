@@ -1,0 +1,13 @@
+﻿@page "{id:int}"
+@model MediaWebApp.Pages.File.DeleteFileModel
+@{
+    ViewData["Title"] = "DeleteFile";
+}
+
+<h1>Delete File</h1>
+
+<p>Are you sure you want to delete this file?</p>
+
+<form method="post" class="form-group">
+    <input type="submit" class="btn btn-danger" value="Delete File" />
+</form>

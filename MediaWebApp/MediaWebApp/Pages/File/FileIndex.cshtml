@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{key?}/{value?}"
 @model MediaWebApp.Pages.File.FileIndexModel
 @{
     ViewData["Title"] = "Media Files";
@@ -7,6 +7,16 @@
 <h1>Media Files</h1>
 
 <p><a asp-page="./AddFile">Add Media</a></p>
+
+<form>
+    <p>
+        <select asp-for="Key" asp-items="Model.TagKeys">
+            <option value="">All</option>
+        </select>
+        Title: <input type="text" asp-for="Value" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
 
 <table class="table">
     <thead>
@@ -17,7 +27,13 @@
             <th>
                 @Html.DisplayNameFor(model => model.Files[0].Path)
             </th>
-    </thead>
+            <th>
+                @Html.DisplayNameFor(model => model.Files[0].Tags)
+            </th>
+            <th>
+                Operations
+            </th>
+</thead>
     <tbody>
         @foreach (var item in Model.Files)
         {
@@ -26,7 +42,23 @@
                     @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Path)
+                    <a href="@Html.DisplayFor(modelItem => item.Path)" target="_blank">
+                        <img style="max-width: 200px; max-height: 200px;" src="@Html.DisplayFor(modelItem => item.Path)" />
+                    </a>
+                </td>
+                <td>
+                    <ul>
+                        @foreach (var tag in item.Tags)
+                        {
+                        <li>@Html.DisplayFor(tagItem => tag.Key): @Html.DisplayFor(tagItem => tag.Value)</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <a asp-page="./EditFile" asp-route-id="@item.Id">Add Tag</a>  |
+                        <a asp-page="./DeleteFile" asp-route-id="@item.Id">Delete File</a>
+                    </ul>
                 </td>
             </tr>
         }

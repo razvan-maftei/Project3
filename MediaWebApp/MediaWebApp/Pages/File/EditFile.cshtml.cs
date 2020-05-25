@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -8,16 +9,22 @@ using ServiceReference1;
 
 namespace MediaWebApp.Pages.File
 {
-    public class AddFileModel : PageModel
+    public class EditFileModel : PageModel
     {
         private readonly MapperConfiguration config;
         private readonly IMapper iMapper;
         FileMetadataTagClient pcc = new FileMetadataTagClient();
+        [BindProperty(SupportsGet = true)]
+        public int Id { get; set; }
         [BindProperty]
         public Models.FileDTO FileDTO { get; set; }
         public List<string> TagKeys { get; set; }
-
-        public AddFileModel()
+        [BindProperty]
+        public string TagKey1 { get; set; }
+        [BindProperty]
+        public string TagValue1 { get; set; }
+ 
+        public EditFileModel()
         {
             config = new MapperConfiguration(
             cfg =>
@@ -31,36 +38,43 @@ namespace MediaWebApp.Pages.File
             });
             iMapper = config.CreateMapper();
             FileDTO = new Models.FileDTO();
-            TagKeys = new List<string>();
+            TagKey1 = "";
+            TagValue1 = "";
         }
-
         public async Task OnGetAsync()
         {
             var files = await pcc.GetFilesAndMetadataAsync();
-            foreach (var file in files)
+            var OriginalFile = files.First(f => f.Id == Id);
+            FileDTO = iMapper.Map<ServiceReference1.FileDTO, Models.FileDTO>(OriginalFile);
+            var MetadataDTO = new Models.MetadataDTO();
+            MetadataDTO = iMapper.Map<ServiceReference1.MetadataDTO, Models.MetadataDTO>(OriginalFile.Metadata);
+            var Tags = new List<Models.TagDTO>();
+            foreach (var tag in OriginalFile.Tags)
             {
-                foreach (var tag in file.Tags)
-                {
-                    this.TagKeys.Add(tag.Key);
-                }
+                Tags.Add(iMapper.Map<ServiceReference1.TagDTO, Models.TagDTO>(tag));
             }
+            FileDTO.Metadata = MetadataDTO;
+            FileDTO.Tags = Tags;
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            var files = await pcc.GetFilesAndMetadataAsync();
+            var OriginalFile = files.First(f => f.Id == Id);
+
+            var Tag = new ServiceReference1.TagDTO
             {
-                return Page();
-            }
-            var file = iMapper.Map<Models.FileDTO, ServiceReference1.FileDTO>(FileDTO);
-            var Metadata = new Models.MetadataDTO();
-            Metadata.CreationDate = DateTime.Now;
-            file.Metadata = iMapper.Map<Models.MetadataDTO, ServiceReference1.MetadataDTO>(Metadata);
-            file.Tags = new List<ServiceReference1.TagDTO>().ToArray();
+                Key = TagKey1,
+                Value = TagValue1
+            };
+
+            Tag.File = OriginalFile;
+            Tag.FileId = OriginalFile.Id;
+
             try
             {
-                await pcc.AddFileAsync(file);
-            } catch(Exception e)
+                await pcc.AddTagAsync(Tag);
+            } catch (Exception e)
             {
                 return RedirectToAction("Error");
             }

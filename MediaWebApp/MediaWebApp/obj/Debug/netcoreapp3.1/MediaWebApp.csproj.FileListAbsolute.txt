@@ -122,3 +122,5 @@ C:\Users\raste\source\repos\MediaWebApp\MediaWebApp\obj\Debug\netcoreapp3.1\Razo
 C:\Users\raste\source\repos\MediaWebApp\MediaWebApp\bin\Debug\netcoreapp3.1\AutoMapper.dll
 C:\Users\raste\source\repos\MediaWebApp\MediaWebApp\obj\Debug\netcoreapp3.1\MediaWebApp.csproj.CoreCompileInputs.cache
 C:\Users\raste\source\repos\MediaWebApp\MediaWebApp\obj\Debug\netcoreapp3.1\MediaWebApp.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\raste\source\repos\MediaWebApp\MediaWebApp\obj\Debug\netcoreapp3.1\Razor\Pages\File\DeleteFile.cshtml.g.cs
+C:\Users\raste\source\repos\MediaWebApp\MediaWebApp\obj\Debug\netcoreapp3.1\Razor\Pages\File\EditFile.cshtml.g.cs
