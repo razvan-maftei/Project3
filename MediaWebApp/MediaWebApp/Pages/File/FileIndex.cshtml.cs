@@ -76,6 +76,7 @@ namespace MediaWebApp.Pages.File
             var Keys = new List<string>();
             foreach (var file in fileList)
             {
+                file.Tags = file.Tags.OrderBy(t => t.Key).ToList();
                 foreach(var tag in file.Tags)
                 {
                     Keys.Add(tag.Key);
@@ -88,7 +89,7 @@ namespace MediaWebApp.Pages.File
             }
             else if (Key != null && Value != null)
             {
-                Files = fileList.Where(f => f.Tags.Any(t => t.Key == Key && t.Value == Value)).ToList();
+                Files = fileList.Where(f => f.Tags.Any(t => t.Key == Key && t.Value.Contains(Value))).ToList();
             }
             return Page();
         }

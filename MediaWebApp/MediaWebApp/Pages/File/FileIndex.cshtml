@@ -13,7 +13,7 @@
         <select asp-for="Key" asp-items="Model.TagKeys">
             <option value="">All</option>
         </select>
-        Title: <input type="text" asp-for="Value" />
+        Search: <input type="text" asp-for="Value" />
         <input type="submit" value="Filter" />
     </p>
 </form>
@@ -25,7 +25,7 @@
                 @Html.DisplayNameFor(model => model.Files[0].Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Files[0].Path)
+                Media
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Files[0].Tags)
